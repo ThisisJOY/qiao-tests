@@ -1,5 +1,5 @@
 /************************** 
- app to read data from board 
+ read data from board 
 ****************************/
 
 const gps               = require('./lib/gps')

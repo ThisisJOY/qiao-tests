@@ -68,11 +68,18 @@ const OsInfo = (props) => {
 }
 
 const LoadAverage = (props) => {
+  // console.log(props.data.loadavg)
 
-  const loadAverage = props.data.loadavg ? props.data.loadavg.map((i) => `${_.ceil(i * 100)}`) : [0, 0, 0]
-  const firstPer   = loadAverage[0] ? `c100 p${loadAverage[0]}`        : "c100 p0"
-  const sencondPer = loadAverage[1] ? `c100 p${loadAverage[1]} green`  : "c100 p0 green"
-  const thirdPer   = loadAverage[2] ? `c100 p${loadAverage[2]} orange` : "c100 p0 orange"
+  /* _.ceil(i * 100 / 2) turns load averages to percentage 
+   *  and then divided by the number of cores (2 in ivh2) 
+   *  and finally roundup (because circle.css can only recognize whole numbers) 
+   */
+  const loadAverage = props.data.loadavg ? props.data.loadavg.map((i) => `${_.ceil(i * 100 / 2)}`) : [0, 0, 0]
+  // console.log(loadAverage)
+
+  const firstPer    = loadAverage[0]     ? `c100 p${loadAverage[0]}`        : "c100 p0"
+  const sencondPer  = loadAverage[1]     ? `c100 p${loadAverage[1]} green`  : "c100 p0 green"
+  const thirdPer    = loadAverage[2]     ? `c100 p${loadAverage[2]} orange` : "c100 p0 orange"
 
   return (
     <div>
@@ -117,6 +124,7 @@ const LoadAverage = (props) => {
 
 const Network = (props) => {
   const networkInterfaces = props.data.networkInterfaces ? props.data.networkInterfaces : {}
+  // console.log(networkInterfaces)
   return (
     <div>
       <table className="table table-striped table-condensed">
@@ -125,13 +133,13 @@ const Network = (props) => {
           <tr><th>Interfaces</th><th>Address</th></tr>
         </thead>
         <tbody>
-          { networkInterfaces.lo0
-            ? networkInterfaces.lo0.map((lo0, i) => <tr><td>lo0 {i + 1}</td><td>{ lo0.address }</td></tr>)
-            :<tr><td>lo0</td><td>No lo0 detected</td></tr>
+          { networkInterfaces.eth0
+            ? networkInterfaces.eth0.map((eth0, i) => <tr><td>eth0 {i + 1}</td><td>{ eth0.address }</td></tr>)
+            :<tr><td>eth0</td><td>No eth0 detected</td></tr>
           }
-          { networkInterfaces.en0
-            ? networkInterfaces.en0.map((en0, i) => <tr><td>en0 {i + 1}</td><td>{ en0.address }</td></tr>)
-            :<tr><td>en0</td><td>No en0 detected</td></tr>
+          { networkInterfaces.lo
+            ? networkInterfaces.lo.map((lo, i) => <tr><td>lo {i + 1}</td><td>{ lo.address }</td></tr>)
+            :<tr><td>lo</td><td>No lo detected</td></tr>
           }
         </tbody>
       </table>
