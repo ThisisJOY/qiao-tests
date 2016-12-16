@@ -57,7 +57,7 @@ const http              = require('http')
 const config            = require('config')
 const path              = require('path')
 const io                = require('socket.io')
-const os                = require('os')
+// const os                = require('os')
 const _ 	            = require('lodash')
 
 const log               = require('./lib/log')
@@ -102,7 +102,7 @@ sio.on('connection', (socket) => {
 		sockets.splice(sockets.indexOf(socket), 1)
 	})
 
-	socket.emit('message', 'hello you!')
+	// socket.emit('message', 'hello you!')
 	// state = {
 	// 	data: [
 	// 	  { name: 'Page A', uv: 4000, pv: 2400, amt: 2400 },
@@ -177,7 +177,7 @@ sio.on('connection', (socket) => {
 	// 	temperature: { LPS25HB: 0, LSM6DS3: 7 } }
 
 	setInterval(() => {
-		state.os.loadavg = os.loadavg().map((i) => i/2)
+	// 	state.os.loadavg = os.loadavg().map((i) => i/2)
 
 		socket.emit('state', state)
 	}, 1000)
