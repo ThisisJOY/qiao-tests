@@ -76,31 +76,40 @@ const LoadAverage = (props) => {
 
   return (
     <div>
-      <h3><span className="label label-success">Load Average</span></h3><br />
-      <div className="clearfix">
-            <div className={ firstPer }>
-                <span>{ `${loadAverage[0]}%` }</span>
-                <div className="slice">
-                    <div className="bar"></div>
-                    <div className="fill"></div>
-                </div>
-            </div>
-
+      <h3><span className="label label-success">Load Average</span></h3>
+      <div className="row">          
+        <div className="clearfix">  
+          <div className="col-md-3">
+              <div><h5><span className="label label-default">1 min</span></h5></div>          
+              <div className={ firstPer }>
+                  <span>{ `${loadAverage[0]}%` }</span>
+                  <div className="slice">
+                      <div className="bar"></div>
+                      <div className="fill"></div>
+                  </div>
+              </div>
+          </div>
+          <div className="col-md-3">
+            <div><h5><span className="label label-default">5 min</span></h5></div>          
             <div className={ sencondPer }>
-                <span>{ `${loadAverage[1]}%` }</span>
-                <div className="slice">
-                    <div className="bar"></div>
-                    <div className="fill"></div>
-                </div>
+              <span>{ `${loadAverage[1]}%` }</span>
+              <div className="slice">
+                  <div className="bar"></div>
+                  <div className="fill"></div>
+              </div>
             </div>
-
+          </div>
+          <div className="col-md-3">
+            <div><h5><span className="label label-default">15 min</span></h5></div>         
             <div className={ thirdPer }>
-                <span>{ `${loadAverage[2]}%` }</span>
-                <div className="slice">
-                    <div className="bar"></div>
-                    <div className="fill"></div>
-                </div>
+              <span>{ `${loadAverage[2]}%` }</span>
+              <div className="slice">
+                <div className="bar"></div>
+                <div className="fill"></div>
+              </div>
             </div>
+          </div>
+        </div>
       </div>
     </div>
   )
