@@ -50,9 +50,8 @@ const OsInfo = (props) => {
         <tbody>
           <tr><td>Hostname</td><td>{ props.data.hostname }</td></tr>
           <tr><td>Arch</td><td>{ props.data.arch }</td></tr>
-          <tr><td>Platform</td><td>{ props.data.platform }</td></tr>
+          <tr><td>Platform</td><td>{ props.data.type }</td></tr>
           <tr><td>Release</td><td>{ props.data.release }</td></tr>
-          <tr><td>Type</td><td>{ props.data.type }</td></tr>
           <tr><td>Uptime (s)</td><td>{ props.data.uptime }</td></tr>
 
           {
@@ -69,12 +68,7 @@ const OsInfo = (props) => {
 
 const LoadAverage = (props) => {
   // console.log(props.data.loadavg)
-
-  /* _.ceil(i * 100 / 2) turns load averages to percentage 
-   *  and then divided by the number of cores (2 in ivh2) 
-   *  and finally roundup (because circle.css can only recognize whole numbers) 
-   */
-  const loadAverage = props.data.loadavg ? props.data.loadavg.map((i) => `${_.ceil(i * 100 / 2)}`) : [0, 0, 0]
+  const loadAverage = props.data.loadavg ? props.data.loadavg.map((i) => `${_.ceil(i * 100)}`) : [0, 0, 0]
   // console.log(loadAverage)
 
   const firstPer    = loadAverage[0]     ? `c100 p${loadAverage[0]}`        : "c100 p0"
