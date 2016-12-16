@@ -1,0 +1,27 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 80px;
+}
+
+.App-header {
+  background-color: lightblue;
+  height: 150px;
+  padding: 5px;
+  color: white;
+}
+
+.recharts-wrapper {
+	background-color: lightgrey;
+}
+
+.Simple-line-chart {
+  position: relative;
+  left: 0px;
+  padding: 30px;
+  width: 700px;
+  height: 400px;
+  background-color: lightpink;
+}
