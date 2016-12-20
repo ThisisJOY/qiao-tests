@@ -39,7 +39,6 @@ const Navigation = () => (
 )
 
 const OsInfo = (props) => {
-  // console.log(props.data)
 
   return (
     <div>
@@ -67,9 +66,7 @@ const OsInfo = (props) => {
 }
 
 const LoadAverage = (props) => {
-  // console.log(props.data.loadavg)
   const loadAverage = props.data.loadavg ? props.data.loadavg.map((i) => `${_.ceil(i * 100)}`) : [0, 0, 0]
-  // console.log(loadAverage)
 
   const firstPer    = loadAverage[0]     ? `c100 p${loadAverage[0]}`        : "c100 p0"
   const sencondPer  = loadAverage[1]     ? `c100 p${loadAverage[1]} green`  : "c100 p0 green"
@@ -78,10 +75,8 @@ const LoadAverage = (props) => {
   return (
     <div>
       <h3><span className="label label-success">Load Average</span></h3>
-      <div className="row">          
+      <h5>1 min / 5 min / 15 min</h5>
         <div className="clearfix">  
-          <div className="col-md-3">
-              <div><h5><span className="label label-default">1 min</span></h5></div>          
               <div className={ firstPer }>
                   <span>{ `${loadAverage[0]}%` }</span>
                   <div className="slice">
@@ -89,19 +84,14 @@ const LoadAverage = (props) => {
                       <div className="fill"></div>
                   </div>
               </div>
-          </div>
-          <div className="col-md-3">
-            <div><h5><span className="label label-default">5 min</span></h5></div>          
+
             <div className={ sencondPer }>
               <span>{ `${loadAverage[1]}%` }</span>
               <div className="slice">
                   <div className="bar"></div>
                   <div className="fill"></div>
-              </div>
+             </div>
             </div>
-          </div>
-          <div className="col-md-3">
-            <div><h5><span className="label label-default">15 min</span></h5></div>         
             <div className={ thirdPer }>
               <span>{ `${loadAverage[2]}%` }</span>
               <div className="slice">
@@ -109,8 +99,6 @@ const LoadAverage = (props) => {
                 <div className="fill"></div>
               </div>
             </div>
-          </div>
-        </div>
       </div>
     </div>
   )
@@ -118,7 +106,6 @@ const LoadAverage = (props) => {
 
 const Network = (props) => {
   const networkInterfaces = props.data.networkInterfaces ? props.data.networkInterfaces : {}
-  // console.log(networkInterfaces)
   return (
     <div>
       <table className="table table-striped table-condensed">
@@ -248,6 +235,29 @@ const Ctrl = (props) => {
   )
 }
 
+const Gps = (props) => {
+  const gps   = props.data.gps
+  const gpgga = gps.gpgga ? gps.gpgga : {} 
+  const gprmc = gps.gprmc ? gps.gprmc : {}
+
+  return (
+    <div>
+     <h3><span className="label label-success">GPS</span></h3>
+      <table className="table table-striped table-condensed">
+      <thead>
+        <tr><th></th><th>GPGGA</th><th>GPRMC</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Time</td><td>{ gpgga.time }</td><td>{ gprmc.time }</td></tr>
+        <tr><td>Latitude</td><td>{ gpgga.latitude }</td><td>{ gprmc.latitude }</td></tr>
+        <tr><td>Longitude</td><td>{ gpgga.longitude }</td><td>{ gprmc.longitude }</td></tr>
+      </tbody>
+      </table>            
+    </div>
+  )
+}
+
+
 class App extends Component {
 
   state = { 
@@ -265,7 +275,6 @@ class App extends Component {
       this.setState(data)
     })  
 
-    // setInterval( () => {console.log(this.state.os.loadavg)}, 1000)
   }
 
   render = () => {
@@ -276,7 +285,13 @@ class App extends Component {
           <div className="row">
             <div className="col-md-6">
               <OsInfo data={this.state.os} />
+              <Sensors data={this.state} />
             </div>
+            <div className="col-md-6">
+              <Ctrl data={this.state} />
+            </div>
+          </div>
+          <div className="row">
             <div className="col-md-6">
               <LoadAverage data={this.state.os} />
             </div>
@@ -296,12 +311,7 @@ class App extends Component {
           </div>
           <div className="row">
             <div className="col-md-12">
-              <Sensors data={this.state} />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <Ctrl data={this.state} />
+              <Gps data={this.state} />
             </div>
           </div>
         </div>
