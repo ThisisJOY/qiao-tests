@@ -193,8 +193,19 @@ const Sensors = (props) => {
   const pressure    = props.data.pressure
   const temperature = props.data.temperature
 
+  const onEditClick = () => {
+    console.log("accelerometer")
+    // console.log("Turning accelerometer off...")
+    bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_ON_13)
+  }
+
   return (
     <div>
+      <div>
+        <button onClick={onEditClick.bind(this)}>On</button>
+        <button>Off</button>
+      </div>
+
       <h3><span className="label label-success">Sensors</span></h3>
       <table className="table table-striped table-condensed">
       <tbody>
@@ -204,15 +215,28 @@ const Sensors = (props) => {
         <tr><td>Temperature</td><td>LPS25HB: { temperature.LPS25HB }</td><td>LSM6DS3: { temperature.LSM6DS3 }</td><td></td></tr>
       </tbody>
       </table>
+
     </div>
   )
+
 }
 
 const Ctrl = (props) => {
   const ctrl = props.data.ctrl
 
+  const onEditClick = () => {
+    console.log("ctrl")
+    // ctrl = {
+    //   ao1: 1800 
+    // }
+  }
+
   return (
     <div>
+      <div>
+        <button onClick={onEditClick.bind(this)}>On</button>
+        <button>Off</button>
+      </div>
       <h3><span className="label label-success">Control</span></h3>
       <table className="table table-striped table-condensed">
       <tbody>
@@ -289,6 +313,7 @@ class App extends Component {
             </div>
             <div className="col-md-6">
               <Ctrl data={this.state} />
+              <onEditClick />
             </div>
           </div>
           <div className="row">

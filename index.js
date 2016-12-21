@@ -57,7 +57,6 @@ const http              = require('http')
 const config            = require('config')
 const path              = require('path')
 const io                = require('socket.io')
-// const os                = require('os')
 const _ 	            = require('lodash')
 
 const log               = require('./lib/log')
