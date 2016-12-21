@@ -194,9 +194,8 @@ const Sensors = (props) => {
   const temperature = props.data.temperature
 
   const onEditClick = () => {
-    console.log("accelerometer")
-    // console.log("Turning accelerometer off...")
-    bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_ON_13)
+    console.log("Turning accelerometer off...")
+    // bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_ON_13)
   }
 
   return (
@@ -313,7 +312,6 @@ class App extends Component {
             </div>
             <div className="col-md-6">
               <Ctrl data={this.state} />
-              <onEditClick />
             </div>
           </div>
           <div className="row">
