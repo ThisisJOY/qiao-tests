@@ -118,14 +118,18 @@ sio.on('connection', (socket) => {
 	const ACC_REGISTRY_X    = 0x28
 	const ACC_REGISTRY_Y    = 0x2A
 	const ACC_REGISTRY_Z    = 0x2C
+	const GYRO_REGISTRY_CTRL = 0x11
+	const GYRO_REGISTRY_X = 0x22
+	const GYRO_REGISTRY_Y = 0x24
+	const GYRO_REGISTRY_Z = 0x26
 
-	// Signals
 	const TURN_ON_13    = 0x10 // 13 Hz (low power)
 	const TURN_OFF      = 0x00 // 0
 
 	const bus    = i2c.openSync(I2C_ADDR)
 	const buffer = Buffer.alloc(2, 0x00)
 
+	// acc
 	socket.on('accOff', (message) => {
 		log.info(message)
 		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_OFF)
@@ -136,4 +140,46 @@ sio.on('connection', (socket) => {
 		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_ON_13)
 	})
 
+	// gyro
+	socket.on('gyroOff', (message) => {
+		log.info(message)
+		bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, TURN_OFF)
+	})
+
+	socket.on('gyroOn', (message) => {
+		log.info(message)
+		bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, TURN_ON_13)
+	})
+
+	// pressure
+	// socket.on('pressOff', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, RESS_REGISTRY_CTRL, TURN_OFF)
+	// })
+
+	// socket.on('pressOn', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, RESS_REGISTRY_CTRL, TURN_ON_13)
+	// })
+
+	// temperature
+	// socket.on('tempOff', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, LPS25HB_TEMP_REGISTRY_CTRL, TURN_OFF)
+	// })
+
+	// socket.on('tempOn', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, LPS25HB_TEMP_REGISTRY_CTRL, TURN_ON_13)
+	// })
+
+	// socket.on('tempOff', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY_CTRL, TURN_OFF)
+	// })
+
+	// socket.on('tempOn', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY_CTRL, TURN_ON_13)
+	// })
 })
