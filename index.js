@@ -119,6 +119,7 @@ sio.on('connection', (socket) => {
 	const ACC_REGISTRY_Y    = 0x2A
 	const ACC_REGISTRY_Z    = 0x2C
 	const GYRO_REGISTRY_CTRL = 0x11
+	// const GYRO_REGISTRY_CTRL = 0x10
 	const GYRO_REGISTRY_X = 0x22
 	const GYRO_REGISTRY_Y = 0x24
 	const GYRO_REGISTRY_Z = 0x26
