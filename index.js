@@ -1,6 +1,6 @@
 /************************** 
- read data from board 
-****************************/
+ * read data from board 
+ **************************/
 
 const gps               = require('./lib/gps')
 const osInfo            = require('./lib/os-info')
@@ -49,8 +49,8 @@ temperature.on("new_temperature", (temp) => {
 // setInterval( () => { console.log(state) }, 2000)
 
 /************************** 
- back-end for web page
-****************************/
+ * back-end for web page
+ **************************/
 
 const express           = require('express')
 const http              = require('http')
@@ -58,7 +58,6 @@ const config            = require('config')
 const path              = require('path')
 const io                = require('socket.io')
 const _ 	            = require('lodash')
-const i2c               = require("i2c-bus")
 
 const log               = require('./lib/log')
 
@@ -109,26 +108,34 @@ sio.on('connection', (socket) => {
 		socket.emit('state', state)
 	}, 1000)
 
-	socket.on('acc', (message) => {
+	/************************************************
+	 * receive configuration commands from front-end
+	 ************************************************/
+
+	const i2c               = require("i2c-bus")
+
+	const I2C_ADDR          = 0
+	const LSM6DS3_ADDR      = 0x6B
+	const ACC_REGISTRY_CTRL = 0x10
+	const ACC_REGISTRY_X    = 0x28
+	const ACC_REGISTRY_Y    = 0x2A
+	const ACC_REGISTRY_Z    = 0x2C
+
+	// Signals
+	const TURN_ON_13    = 0x10 // 13 Hz (low power)
+	const TURN_OFF      = 0x00 // 0
+
+	const bus    = i2c.openSync(I2C_ADDR)
+	const buffer = Buffer.alloc(2, 0x00)
+
+	socket.on('accOff', (message) => {
 		console.log(message)
-
-		var I2C_ADDR          = 0
-		var LSM6DS3_ADDR      = 0x6B
-		var ACC_REGISTRY_CTRL = 0x10
-		var ACC_REGISTRY_X    = 0x28
-		var ACC_REGISTRY_Y    = 0x2A
-		var ACC_REGISTRY_Z    = 0x2C
-
-		// Signals
-		var TURN_ON_13    = 0x10 // 13 Hz (low power)
-		var TURN_OFF      = 0x00 // 0
-
-		var bus    = i2c.openSync(I2C_ADDR)
-		var buffer = Buffer.alloc(2, 0x00)
-
-		// console.log("Turning accelerometer off...")
-		// bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_ON_13)
 		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_OFF)
+	})
+
+	socket.on('accOn', (message) => {
+		console.log(message)
+		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_ON_13)
 	})
 
 })

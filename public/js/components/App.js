@@ -193,16 +193,19 @@ const Sensors = (props) => {
   const pressure    = props.data.pressure
   const temperature = props.data.temperature
 
-  const onEditClick = () => {
-    console.log("Turning accelerometer off...")
-    socket.emit('acc', "configure accelerometer...")
+  const accOff = () => {
+    socket.emit('accOff', "Turning accelerometer off...")
+  }
+
+  const accOn = () => {
+    socket.emit('accOn', "Turning accelerometer on...")
   }
 
   return (
     <div>
       <div>
-        <button onClick={onEditClick}>On</button>
-        <button>Off</button>
+        <button onClick={accOn}>On</button>
+        <button onClick={accOff}>Off</button>
       </div>
 
       <h3><span className="label label-success">Sensors</span></h3>
