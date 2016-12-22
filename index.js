@@ -58,12 +58,15 @@ const config            = require('config')
 const path              = require('path')
 const io                = require('socket.io')
 const _ 	            = require('lodash')
+const i2c               = require("i2c-bus")
 
 const log               = require('./lib/log')
 
 const app    = express()
 const server = http.Server(app)
 const sio    = io(server)
+
+
 
 const port = config.server.port || 3000
 // const host = config.server.host || 'localhost'
@@ -101,8 +104,31 @@ sio.on('connection', (socket) => {
 		sockets.splice(sockets.indexOf(socket), 1)
 	})
 
+	// send the state to front-end
 	setInterval(() => {
 		socket.emit('state', state)
 	}, 1000)
+
+	socket.on('acc', (message) => {
+		console.log(message)
+
+		var I2C_ADDR          = 0
+		var LSM6DS3_ADDR      = 0x6B
+		var ACC_REGISTRY_CTRL = 0x10
+		var ACC_REGISTRY_X    = 0x28
+		var ACC_REGISTRY_Y    = 0x2A
+		var ACC_REGISTRY_Z    = 0x2C
+
+		// Signals
+		var TURN_ON_13    = 0x10 // 13 Hz (low power)
+		var TURN_OFF      = 0x00 // 0
+
+		var bus    = i2c.openSync(I2C_ADDR)
+		var buffer = Buffer.alloc(2, 0x00)
+
+		// console.log("Turning accelerometer off...")
+		// bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_ON_13)
+		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_OFF)
+	})
 
 })

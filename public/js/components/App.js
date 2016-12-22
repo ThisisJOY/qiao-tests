@@ -195,13 +195,13 @@ const Sensors = (props) => {
 
   const onEditClick = () => {
     console.log("Turning accelerometer off...")
-    // bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_ON_13)
+    socket.emit('acc', "configure accelerometer...")
   }
 
   return (
     <div>
       <div>
-        <button onClick={onEditClick.bind(this)}>On</button>
+        <button onClick={onEditClick}>On</button>
         <button>Off</button>
       </div>
 
@@ -233,7 +233,7 @@ const Ctrl = (props) => {
   return (
     <div>
       <div>
-        <button onClick={onEditClick.bind(this)}>On</button>
+        <button onClick={onEditClick}>On</button>
         <button>Off</button>
       </div>
       <h3><span className="label label-success">Control</span></h3>
