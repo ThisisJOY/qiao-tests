@@ -1,5 +1,5 @@
 /************************** 
- * read data from board 
+ * read data from ivh2 
  **************************/
 
 const gps               = require('./lib/gps')
@@ -65,8 +65,6 @@ const app    = express()
 const server = http.Server(app)
 const sio    = io(server)
 
-
-
 const port = config.server.port || 3000
 // const host = config.server.host || 'localhost'
 const host = config.server.host || '192.168.1.25'
@@ -129,12 +127,12 @@ sio.on('connection', (socket) => {
 	const buffer = Buffer.alloc(2, 0x00)
 
 	socket.on('accOff', (message) => {
-		console.log(message)
+		log.info(message)
 		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_OFF)
 	})
 
 	socket.on('accOn', (message) => {
-		console.log(message)
+		log.info(message)
 		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_ON_13)
 	})
 
