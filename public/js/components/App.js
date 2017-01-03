@@ -1,5 +1,5 @@
 // const socket = window.io.connect('http://localhost:3000')
-const socket = io.connect('http://192.168.1.25:3000')
+const socket = io.connect('http://192.168.1.49:3000')
 
 const { Component } = React
 
@@ -35,25 +35,25 @@ const Navigation = () => (
           </ul>
         </div>
       </div>
-    </nav>  
+    </nav>
 )
 
 class App extends Component {
 
-  state = { 
+  state = {
     gps: {},
     os: {},
     acc: {},
     gyro: {},
     ctrl: {},
     pressure: {},
-    temperature: {} 
+    temperature: {}
   }
 
   componentDidMount = () => {
     socket.on('state', (data) => {
       this.setState(data)
-    })  
+    })
 
   }
 
