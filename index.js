@@ -140,7 +140,7 @@ sio.on('connection', (socket) => {
 	const bus    = i2c.openSync(I2C_ADDR)
 	const buffer = Buffer.alloc(2, 0x00)
 
-	// acc
+	// accelerometer
 	socket.on('accOff', (message) => {
 		log.info(message)
 		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_OFF)
@@ -151,7 +151,7 @@ sio.on('connection', (socket) => {
 		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_ON_13)
 	})
 
-	// gyro
+	// gyroscope
 	socket.on('gyroOff', (message) => {
 		log.info(message)
 		bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, TURN_OFF)
@@ -173,7 +173,7 @@ sio.on('connection', (socket) => {
 	// 	bus.writeByteSync(LSM6DS3_ADDR, RESS_REGISTRY_CTRL, TURN_ON_13)
 	// })
 
-	// temperature
+	// temperature LSM6DS3
 	// socket.on('tempOff', (message) => {
 	// 	log.info(message)
 	// 	bus.writeByteSync(LSM6DS3_ADDR, LPS25HB_TEMP_REGISTRY_CTRL, TURN_OFF)
@@ -184,6 +184,7 @@ sio.on('connection', (socket) => {
 	// 	bus.writeByteSync(LSM6DS3_ADDR, LPS25HB_TEMP_REGISTRY_CTRL, TURN_ON_13)
 	// })
 
+	// temperature LPS25HB
 	// socket.on('tempOff', (message) => {
 	// 	log.info(message)
 	// 	bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY_CTRL, TURN_OFF)
