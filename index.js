@@ -229,4 +229,15 @@ sio.on('connection', (socket) => {
 		log.info(message)
 		bus.readWordSync(MICROCTRL_ADDR, PMIC_REG_AO2)
 	})
+
+	socket.on('handleChange', (message) => {
+		log.info(message)
+		bus.writeByteSync(MICROCTRL_ADDR, AO2_REGISTRY_CTRL, INPUT_AO2)
+	})
+
+	socket.on('handleSubmit', (message) => {
+		log.info(message)
+		bus.writeByteSync(MICROCTRL_ADDR, AO2_REGISTRY_CTRL, INPUT_AO2)
+	})
+
 })

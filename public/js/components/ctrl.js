@@ -20,12 +20,14 @@ const Ctrl = (props) => {
   }
 
   const handleChange = (event) => {
-    this.setState({value: event.target.value});
+    socket.emit('handleChange', event.target.value)
+    // this.setState({value: event.target.value})
   }
 
   const handleSubmit = (event) => {
-    alert('A name was submitted: ' + this.state.value);
-    event.preventDefault();
+    socket.emit('handleSubmit', state.value)
+    // alert('A name was submitted: ' + state.value)
+    // event.preventDefault()
   }
 
   return (
@@ -41,37 +43,29 @@ const Ctrl = (props) => {
         <tr><td>vi2</td><td>{ ctrl.vi2 }</td></tr>
         <tr><td>vi3</td><td>{ ctrl.vi3 }</td></tr>
         <tr><td>vi4</td><td>{ ctrl.vi4 }</td></tr>
-        <tr>
-          <td>ao1</td><td>{ ctrl.ao1 }</td>
-          <td>
-            <div className="input-group">
-              <input type="text" className="form-control" placeholder="Input ao1..." />
-              <span className="input-group-btn">
-                <button type="button" className="btn btn-default btn-info" onClick={editAo1}>Edit</button>
-                <button type="button" className="btn btn-default btn-info" onClick={resetAo1}>Reset</button>
-              </span>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <td>ao2</td><td>{ ctrl.ao2 }</td>
-          <td>
-            <div className="input-group">
-              <input type="text" className="form-control" placeholder="Input ao2..." />
-              <span className="input-group-btn">
-                <button type="button" className="btn btn-default btn-info" onClick={editAo2}>Edit</button>
-                <button type="button" className="btn btn-default btn-info" onClick={resetAo2}>Reset</button>
-              </span>
-            </div>
-          </td>
-        </tr>
+        <tr><td>ao1</td><td>{ ctrl.ao1 }</td></tr>
+        <tr><td>ao2</td><td>{ ctrl.ao2 }</td></tr>
         <tr><td>va01</td><td>{ _.round((ctrl.va01), 3).toFixed(3) }</td></tr>
         <tr><td>va02</td><td>{ _.round((ctrl.va02), 3).toFixed(3) }</td></tr>
         <tr><td>out</td><td>{ _.round((ctrl.out), 3).toFixed(3) }</td></tr>
       </tbody>
       </table>
 
+      <div className="input-group">
+        <input type="text" className="form-control" placeholder="Input ao1..." />
+        <span className="input-group-btn">
+          <button type="button" className="btn btn-default btn-info" onClick={editAo1}>Save</button>
+          <button type="button" className="btn btn-default btn-info" onClick={resetAo1}>Reset</button>
+        </span>
+      </div>
 
+      <div className="input-group">
+        <input type="text" className="form-control" placeholder="Input ao2..." />
+        <span className="input-group-btn">
+          <button type="button" className="btn btn-default btn-info" onClick={editAo2}>Save</button>
+          <button type="button" className="btn btn-default btn-info" onClick={resetAo2}>Reset</button>
+        </span>
+      </div>
 
     </div>
   )
@@ -80,9 +74,9 @@ const Ctrl = (props) => {
 /*
       <form onSubmit={handleSubmit}>
         <label>
-          Name:
-          <input type="text" value={this.state.value} onChange={handleChange} />
+          ao1: 
+          <input type="text" value={state.value} onChange={handleChange} />
         </label>
         <input type="submit" value="Submit" />
       </form>
-      */
+*/
