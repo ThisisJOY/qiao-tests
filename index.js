@@ -58,7 +58,7 @@ const config            = require('config')
 const path              = require('path')
 const io                = require('socket.io')
 const os                = require('os')
-const _ 	            = require('lodash')
+const _                 = require('lodash')
 
 const log               = require('./lib/log')
 
@@ -158,8 +158,8 @@ sio.on('connection', (socket) => {
 
 	const AO1_REGISTRY_CTRL = 0x12
 	const AO2_REGISTRY_CTRL = 0x14
-	const INPUT_AO1 = 0x01
-	const INPUT_AO2 = 0x01
+	const INPUT_AO1 = 0x0001
+	const INPUT_AO2 = 0x0001
 
 	const bus    = i2c.openSync(I2C_ADDR)
 	const buffer = Buffer.alloc(2, 0x00)

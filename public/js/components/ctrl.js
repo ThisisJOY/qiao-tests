@@ -1,6 +1,8 @@
 const Ctrl = (props) => {
   const ctrl = props.data.ctrl
 
+  var state = {value: ''}
+
   const editAo1 = () => {
     socket.emit('editAo1', "Editing ao1...")
   }
@@ -15,6 +17,15 @@ const Ctrl = (props) => {
 
   const resetAo2 = () => {
     socket.emit('resetAo2', "Resetting ao2...")
+  }
+
+  const handleChange = (event) => {
+    this.setState({value: event.target.value});
+  }
+
+  const handleSubmit = (event) => {
+    alert('A name was submitted: ' + this.state.value);
+    event.preventDefault();
   }
 
   return (
@@ -59,6 +70,19 @@ const Ctrl = (props) => {
         <tr><td>out</td><td>{ _.round((ctrl.out), 3).toFixed(3) }</td></tr>
       </tbody>
       </table>
+
+
+
     </div>
   )
 }
+
+/*
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input type="text" value={this.state.value} onChange={handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
+      */
