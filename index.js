@@ -143,18 +143,8 @@ sio.on('connection', (socket) => {
 	const TURN_ON_PD_LPS              = 0X80
 
 	const MICROCTRL_ADDR    = 0x55
-	// const PMIC_REG_VBUS     = 0x02
-	// const PMIC_REG_VIGN     = 0x04
-	// const PMIC_REG_BRD_TEMP = 0x06
-	// const PMIC_REG_PWR_TEMP = 0x08
-	// const PMIC_REG_VI1      = 0x0A
-	// const PMIC_REG_VI2      = 0x0C
-	// const PMIC_REG_VI3      = 0x0E
-	// const PMIC_REG_VI4      = 0x10
 	const PMIC_REG_AO1      = 0x12
 	const PMIC_REG_AO2      = 0x14
-	// const PMIC_REG_VAO1     = 0x16
-	// const PMIC_REG_VAO2     = 0x18
 
 	const AO1_REGISTRY_CTRL = 0x12
 	const AO2_REGISTRY_CTRL = 0x14
@@ -212,6 +202,7 @@ sio.on('connection', (socket) => {
 	socket.on('editAo1', (message) => {
 		log.info(message)
 		bus.writeByteSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
+		log.info(bus.readWordSync(MICROCTRL_ADDR, PMIC_REG_AO1))
 	})
 
 	socket.on('resetAo1', (message) => {
@@ -232,12 +223,12 @@ sio.on('connection', (socket) => {
 
 	socket.on('handleChange', (message) => {
 		log.info(message)
-		bus.writeByteSync(MICROCTRL_ADDR, AO2_REGISTRY_CTRL, INPUT_AO2)
+		bus.writeByteSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
 	})
 
 	socket.on('handleSubmit', (message) => {
 		log.info(message)
-		bus.writeByteSync(MICROCTRL_ADDR, AO2_REGISTRY_CTRL, INPUT_AO2)
+		bus.writeByteSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
 	})
 
 })

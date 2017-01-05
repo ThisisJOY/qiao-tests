@@ -35,19 +35,19 @@ const Ctrl = (props) => {
       <h3><span className="label label-success">Control</span></h3>
       <table className="table table-striped table-condensed">
       <tbody>
-        <tr><td>vbus</td><td>{ _.round((ctrl.vbus), 3).toFixed(3) }</td></tr>
-        <tr><td>vign</td><td>{ _.round((ctrl.vign), 3).toFixed(3) }</td></tr>
-        <tr><td>brd_temp</td><td>{ _.round((ctrl.brd_temp), 3).toFixed(3)}</td></tr>
-        <tr><td>pwr_temp</td><td>{ _.round((ctrl.brd_temp), 3).toFixed(3)}</td></tr>
-        <tr><td>vi1</td><td>{ ctrl.vi1 }</td></tr>
-        <tr><td>vi2</td><td>{ ctrl.vi2 }</td></tr>
-        <tr><td>vi3</td><td>{ ctrl.vi3 }</td></tr>
-        <tr><td>vi4</td><td>{ ctrl.vi4 }</td></tr>
-        <tr><td>ao1</td><td>{ ctrl.ao1 }</td></tr>
-        <tr><td>ao2</td><td>{ ctrl.ao2 }</td></tr>
-        <tr><td>va01</td><td>{ _.round((ctrl.va01), 3).toFixed(3) }</td></tr>
-        <tr><td>va02</td><td>{ _.round((ctrl.va02), 3).toFixed(3) }</td></tr>
-        <tr><td>out</td><td>{ _.round((ctrl.out), 3).toFixed(3) }</td></tr>
+        <tr><td>vbus (V)</td><td>{ _.round((ctrl.vbus), 2).toFixed(2) }</td></tr>
+        <tr><td>vign (V)</td><td>{ _.round((ctrl.vign), 2).toFixed(2) }</td></tr>
+        <tr><td>brd_temp (°C)</td><td>{ _.round((ctrl.brd_temp), 2).toFixed(2)}</td></tr>
+        <tr><td>pwr_temp (°C)</td><td>{ _.round((ctrl.brd_temp), 2).toFixed(2)}</td></tr>
+        <tr><td>vi1 (V)</td><td>{ _.round((ctrl.vi1 / 1000), 2).toFixed(2) }</td></tr>
+        <tr><td>vi2 (V)</td><td>{ _.round((ctrl.vi2 / 1000), 2).toFixed(2) }</td></tr>
+        <tr><td>vi3 (V)</td><td>{ _.round((ctrl.vi3 / 1000), 2).toFixed(2) }</td></tr>
+        <tr><td>vi4 (V)</td><td>{ _.round((ctrl.vi4 / 1000), 2).toFixed(2) }</td></tr>
+        <tr><td>ao1 (V)</td><td>{ ctrl.ao1 }</td></tr>
+        <tr><td>ao2 (V)</td><td>{ ctrl.ao2 }</td></tr>
+        <tr><td>va01 (V)</td><td>{ _.round((ctrl.va01 / 1000), 2).toFixed(2) }</td></tr>
+        <tr><td>va02 (V)</td><td>{ _.round((ctrl.va02 / 1000), 2).toFixed(2) }</td></tr>
+        <tr><td>out</td><td>{ _.round((ctrl.out / 1000), 2).toFixed(2) }</td></tr>
       </tbody>
       </table>
 
@@ -66,6 +66,14 @@ const Ctrl = (props) => {
           <button type="button" className="btn btn-default btn-info" onClick={resetAo2}>Reset</button>
         </span>
       </div>
+
+      <form onSubmit={handleSubmit}>
+        <label>
+          ao1: 
+          <input type="text" value={state.value} onChange={handleChange} />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
 
     </div>
   )

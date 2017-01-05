@@ -85,8 +85,8 @@ const Sensors = (props) => {
           </div>
         </td>
         </tr>
-        <tr><td>Temperature LSM6DS3</td>
-        <td>{ _.ceil(temperature.LSM6DS3) }</td>
+        <tr><td>Temperature LSM6DS3 (°C)</td>
+        <td>{ _.round((temperature.LSM6DS3), 2).toFixed(2) }</td>
         <td></td><td></td>
         <td>
           <div className="btn-group" role="group">
@@ -95,8 +95,8 @@ const Sensors = (props) => {
           </div>          
         </td>
         </tr>
-        <tr><td>Temperature LPS25HB</td>
-        <td>{ _.ceil(temperature.LPS25HB) }</td>
+        <tr><td>Temperature LPS25HB (°C)</td>
+        <td>{ _.round((temperature.LPS25HB), 2).toFixed(2) }</td>
         <td></td><td></td>
         <td>
           <div className="btn-group" role="group">
