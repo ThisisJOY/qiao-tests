@@ -54,16 +54,16 @@ const Ctrl = (props) => {
       <div className="input-group">
         <input type="text" className="form-control" placeholder="Input ao1..." />
         <span className="input-group-btn">
-          <button type="button" className="btn btn-default btn-info" onClick={editAo1}>Save</button>
-          <button type="button" className="btn btn-default btn-info" onClick={resetAo1}>Reset</button>
+          <button type="button" className="btn btn-default btn-info" onClick={editAo1}>Write</button>
+          <button type="button" className="btn btn-default btn-info" onClick={resetAo1}>Read</button>
         </span>
       </div>
 
       <div className="input-group">
         <input type="text" className="form-control" placeholder="Input ao2..." />
         <span className="input-group-btn">
-          <button type="button" className="btn btn-default btn-info" onClick={editAo2}>Save</button>
-          <button type="button" className="btn btn-default btn-info" onClick={resetAo2}>Reset</button>
+          <button type="button" className="btn btn-default btn-info" onClick={editAo2}>Write</button>
+          <button type="button" className="btn btn-default btn-info" onClick={resetAo2}>Read</button>
         </span>
       </div>
 

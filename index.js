@@ -146,10 +146,10 @@ sio.on('connection', (socket) => {
 	const PMIC_REG_AO1      = 0x12
 	const PMIC_REG_AO2      = 0x14
 
-	const AO1_REGISTRY_CTRL = 0x12
-	const AO2_REGISTRY_CTRL = 0x14
-	const INPUT_AO1 = 0x0001
-	const INPUT_AO2 = 0x0001
+	const AO1_REGISTRY_CTRL = 0x20
+	const AO2_REGISTRY_CTRL = 0x22
+	const INPUT_AO1 = 0x08
+	const INPUT_AO2 = 0x0A
 
 	const bus    = i2c.openSync(I2C_ADDR)
 	const buffer = Buffer.alloc(2, 0x00)
@@ -202,12 +202,12 @@ sio.on('connection', (socket) => {
 	socket.on('editAo1', (message) => {
 		log.info(message)
 		bus.writeByteSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
-		log.info(bus.readWordSync(MICROCTRL_ADDR, PMIC_REG_AO1))
+		log.info(bus.readWordSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL))
 	})
 
 	socket.on('resetAo1', (message) => {
 		log.info(message)
-		bus.readWordSync(MICROCTRL_ADDR, PMIC_REG_AO1)
+		bus.readWordSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL)
 	})
 
 	// ctrl ao2
@@ -218,7 +218,7 @@ sio.on('connection', (socket) => {
 
 	socket.on('resetAo2', (message) => {
 		log.info(message)
-		bus.readWordSync(MICROCTRL_ADDR, PMIC_REG_AO2)
+		bus.readWordSync(MICROCTRL_ADDR, AO2_REGISTRY_CTRL)
 	})
 
 	socket.on('handleChange', (message) => {
