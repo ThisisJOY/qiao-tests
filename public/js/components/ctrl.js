@@ -3,20 +3,20 @@ const Ctrl = (props) => {
 
   var state = {value: ''}
 
-  const editAo1 = () => {
-    socket.emit('editAo1', "Editing ao1...")
+  const writeAO1 = () => {
+    socket.emit('writeAO1', "Writing ao1...")
   }
 
-  const resetAo1 = () => {
-    socket.emit('resetAo1', "Resetting ao1...")
+  const readAO1 = () => {
+    socket.emit('readAO1', "Reading ao1...")
   }
 
-  const editAo2 = () => {
-    socket.emit('editAo2', "Editing ao2...")
+  const writeAO2 = () => {
+    socket.emit('writeAO2', "Writing ao2...")
   }
 
-  const resetAo2 = () => {
-    socket.emit('resetAo2', "Resetting ao2...")
+  const readAO2 = () => {
+    socket.emit('readAO2', "Reading ao2...")
   }
 
   const handleChange = (event) => {
@@ -38,15 +38,15 @@ const Ctrl = (props) => {
         <tr><td>vbus (V)</td><td>{ _.round((ctrl.vbus), 2).toFixed(2) }</td></tr>
         <tr><td>vign (V)</td><td>{ _.round((ctrl.vign), 2).toFixed(2) }</td></tr>
         <tr><td>brd_temp (°C)</td><td>{ _.round((ctrl.brd_temp), 2).toFixed(2)}</td></tr>
-        <tr><td>pwr_temp (°C)</td><td>{ _.round((ctrl.brd_temp), 2).toFixed(2)}</td></tr>
-        <tr><td>vi1 (V)</td><td>{ _.round((ctrl.vi1 / 1000), 2).toFixed(2) }</td></tr>
-        <tr><td>vi2 (V)</td><td>{ _.round((ctrl.vi2 / 1000), 2).toFixed(2) }</td></tr>
-        <tr><td>vi3 (V)</td><td>{ _.round((ctrl.vi3 / 1000), 2).toFixed(2) }</td></tr>
-        <tr><td>vi4 (V)</td><td>{ _.round((ctrl.vi4 / 1000), 2).toFixed(2) }</td></tr>
+        <tr><td>pwr_temp (°C)</td><td>{ _.round((ctrl.pwr_temp), 2).toFixed(2)}</td></tr>
+        <tr><td>vi1 (V)</td><td>{ _.round((ctrl.vi1), 2).toFixed(2) }</td></tr>
+        <tr><td>vi2 (V)</td><td>{ _.round((ctrl.vi2), 2).toFixed(2) }</td></tr>
+        <tr><td>vi3 (V)</td><td>{ _.round((ctrl.vi3), 2).toFixed(2) }</td></tr>
+        <tr><td>vi4 (V)</td><td>{ _.round((ctrl.vi4), 2).toFixed(2) }</td></tr>
         <tr><td>ao1 (V)</td><td>{ ctrl.ao1 }</td></tr>
         <tr><td>ao2 (V)</td><td>{ ctrl.ao2 }</td></tr>
-        <tr><td>va01 (V)</td><td>{ _.round((ctrl.va01 / 1000), 2).toFixed(2) }</td></tr>
-        <tr><td>va02 (V)</td><td>{ _.round((ctrl.va02 / 1000), 2).toFixed(2) }</td></tr>
+        <tr><td>va01 (V)</td><td>{ _.round((ctrl.va01), 2).toFixed(2) }</td></tr>
+        <tr><td>va02 (V)</td><td>{ _.round((ctrl.va02), 2).toFixed(2) }</td></tr>
         <tr><td>out</td><td>{ _.round((ctrl.out / 1000), 2).toFixed(2) }</td></tr>
       </tbody>
       </table>
@@ -54,26 +54,18 @@ const Ctrl = (props) => {
       <div className="input-group">
         <input type="text" className="form-control" placeholder="Input ao1..." />
         <span className="input-group-btn">
-          <button type="button" className="btn btn-default btn-info" onClick={editAo1}>Write</button>
-          <button type="button" className="btn btn-default btn-info" onClick={resetAo1}>Read</button>
+          <button type="button" className="btn btn-default btn-info" onClick={writeAO1}>Write</button>
+          <button type="button" className="btn btn-default btn-info" onClick={readAO1}>Read</button>
         </span>
       </div>
 
       <div className="input-group">
         <input type="text" className="form-control" placeholder="Input ao2..." />
         <span className="input-group-btn">
-          <button type="button" className="btn btn-default btn-info" onClick={editAo2}>Write</button>
-          <button type="button" className="btn btn-default btn-info" onClick={resetAo2}>Read</button>
+          <button type="button" className="btn btn-default btn-info" onClick={writeAO2}>Write</button>
+          <button type="button" className="btn btn-default btn-info" onClick={readAO2}>Read</button>
         </span>
       </div>
-
-      <form onSubmit={handleSubmit}>
-        <label>
-          ao1: 
-          <input type="text" value={state.value} onChange={handleChange} />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
 
     </div>
   )
@@ -87,4 +79,5 @@ const Ctrl = (props) => {
         </label>
         <input type="submit" value="Submit" />
       </form>
+
 */

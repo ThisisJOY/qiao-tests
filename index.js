@@ -143,8 +143,6 @@ sio.on('connection', (socket) => {
 	const TURN_ON_PD_LPS              = 0X80
 
 	const MICROCTRL_ADDR    = 0x55
-	const PMIC_REG_AO1      = 0x12
-	const PMIC_REG_AO2      = 0x14
 
 	const AO1_REGISTRY_CTRL = 0x20
 	const AO2_REGISTRY_CTRL = 0x22
@@ -176,59 +174,62 @@ sio.on('connection', (socket) => {
 		bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, TURN_ON_13)
 	})
 
-	// pressure LPS25HB
-	socket.on('pressOff', (message) => {
-		log.info(message)
-		bus.writeByteSync(LSM6DS3_ADDR, LPS25HB_PRESS_REGISTRY_CTRL, TURN_OFF)
-	})
+	// // pressure LPS25HB
+	// socket.on('pressOff', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, LPS25HB_PRESS_REGISTRY_CTRL, TURN_OFF)
+	// })
 
-	socket.on('pressOn', (message) => {
-		log.info(message)
-		bus.writeByteSync(LSM6DS3_ADDR, LPS25HB_PRESS_REGISTRY_CTRL, TURN_ON_PD_LPS)
-	})
+	// socket.on('pressOn', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, LPS25HB_PRESS_REGISTRY_CTRL, TURN_ON_PD_LPS)
+	// })
 
-	// temperature LSM6DS3
-	socket.on('tempLSMOff', (message) => {
-		log.info(message)
-		bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY_CTRL, TURN_OFF)
-	})
+	// // temperature LSM6DS3
+	// socket.on('tempLSMOff', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY_CTRL, TURN_OFF)
+	// })
 
-	socket.on('tempLSMOn', (message) => {
-		log.info(message)
-		bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY_CTRL, TURN_ON_13)
-	})
+	// socket.on('tempLSMOn', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY_CTRL, TURN_ON_13)
+	// })
 
 	// ctrl ao1
-	socket.on('editAo1', (message) => {
+	socket.on('writeAO1', (message) => {
 		log.info(message)
 		bus.writeByteSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
 		log.info(bus.readWordSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL))
 	})
 
-	socket.on('resetAo1', (message) => {
+	socket.on('readAO1', (message) => {
 		log.info(message)
 		bus.readWordSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL)
+		log.info(bus.readWordSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL))
 	})
 
 	// ctrl ao2
-	socket.on('editAo2', (message) => {
+	socket.on('writeAO2', (message) => {
 		log.info(message)
 		bus.writeByteSync(MICROCTRL_ADDR, AO2_REGISTRY_CTRL, INPUT_AO2)
 	})
 
-	socket.on('resetAo2', (message) => {
+	socket.on('readAO2', (message) => {
 		log.info(message)
 		bus.readWordSync(MICROCTRL_ADDR, AO2_REGISTRY_CTRL)
+		log.info(bus.readWordSync(MICROCTRL_ADDR, AO2_REGISTRY_CTRL))
+
 	})
 
-	socket.on('handleChange', (message) => {
-		log.info(message)
-		bus.writeByteSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
-	})
+	// socket.on('handleChange', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
+	// })
 
-	socket.on('handleSubmit', (message) => {
-		log.info(message)
-		bus.writeByteSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
-	})
+	// socket.on('handleSubmit', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
+	// })
 
 })
