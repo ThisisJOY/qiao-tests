@@ -133,9 +133,9 @@ sio.on('connection', (socket) => {
 	const GYRO_REGISTRY_X             = 0x22
 	const GYRO_REGISTRY_Y             = 0x24
 	const GYRO_REGISTRY_Z             = 0x26
-	const LPS25HB_PRESS_REGISTRY_CTRL = 0x20
-	const LPS25HB_TEMP_REGISTRY_CTRL  = 0x20
-	const LSM6DS3_TEMP_REGISTRY_CTRL  = 0x21
+	// const LPS25HB_PRESS_REGISTRY_CTRL = 0x20
+	// const LPS25HB_TEMP_REGISTRY_CTRL  = 0x20
+	// const LSM6DS3_TEMP_REGISTRY_CTRL  = 0x21
 
 	const TURN_ON_13                  = 0x10 // 13 Hz (low power)
 	const TURN_OFF                    = 0x00 // 0
@@ -146,8 +146,8 @@ sio.on('connection', (socket) => {
 
 	const AO1_REGISTRY_CTRL = 0x20
 	const AO2_REGISTRY_CTRL = 0x22
-	const INPUT_AO1 = 0x0009
-	const INPUT_AO2 = 0x000A
+	const INPUT_AO1 = 0x09
+	const INPUT_AO2 = 0x0A
 
 	const bus    = i2c.openSync(I2C_ADDR)
 	const buffer = Buffer.alloc(2, 0x00)
@@ -164,6 +164,10 @@ sio.on('connection', (socket) => {
 	})
 
 	// gyroscope
+	// socket.on('gyroSwitch', (mode, message) => {
+	// 	bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)		
+	// }
+
 	socket.on('gyroOff', (message) => {
 		log.info(message)
 		bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, TURN_OFF)
@@ -199,13 +203,13 @@ sio.on('connection', (socket) => {
 	// ctrl ao1
 	socket.on('writeAO1', (message) => {
 		log.info(message + ": " + INPUT_AO1)
-		bus.writeByteSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
+		bus.writeWordSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
 	})
 
 	// ctrl ao2
 	socket.on('writeAO2', (message) => {
 		log.info(message + ": " + INPUT_AO2)
-		bus.writeByteSync(MICROCTRL_ADDR, AO2_REGISTRY_CTRL, INPUT_AO2)
+		bus.writeWordSync(MICROCTRL_ADDR, AO2_REGISTRY_CTRL, INPUT_AO2)
 	})
 
 	// socket.on('handleChange', (message) => {
