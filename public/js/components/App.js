@@ -65,7 +65,8 @@ class App extends Component {
           <div className="row">
             <div className="col-md-6">
               <OsInfo data={this.state.os} />
-              <Sensors data={this.state} />
+              <LSM data={this.state} />
+              <LPS data={this.state} />
             </div>
             <div className="col-md-6">
               <Ctrl data={this.state} />
