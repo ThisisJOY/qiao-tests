@@ -133,9 +133,6 @@ sio.on('connection', (socket) => {
 	const GYRO_REGISTRY_X             = 0x22
 	const GYRO_REGISTRY_Y             = 0x24
 	const GYRO_REGISTRY_Z             = 0x26
-	// const LPS25HB_PRESS_REGISTRY_CTRL = 0x20
-	// const LPS25HB_TEMP_REGISTRY_CTRL  = 0x20
-	// const LSM6DS3_TEMP_REGISTRY_CTRL  = 0x21
 
 	const TURN_ON_13                  = 0x10 // 13 Hz (low power)
 	const TURN_OFF                    = 0x00 // 0

@@ -65,7 +65,7 @@ const LSM = (props) => {
               <button type="button" className={`btn btn-sm btn-info ${acc.status ? "" : "active"}`} onClick={accOff}>Off</button>
             </div>
           </td>
-          <td>{`mode: ${acc.status}`}</td>
+          <td>{`Register: ${acc.status}`}</td>
         </tr>
         <tr>
           <td>Gyroscope</td>
