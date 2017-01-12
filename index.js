@@ -46,7 +46,7 @@ temperature.on("new_temperature", (temp) => {
   state.temperature = temp
 })
 
-// setInterval( () => { console.log(state) }, 2000)
+// setInterval( () => { console.log(state) }, 1000)
 
 /**************************
  * back-end for web page
@@ -137,7 +137,7 @@ sio.on('connection', (socket) => {
 	const TURN_ON_13                  = 0x10 // 13 Hz (low power)
 	const TURN_OFF                    = 0x00 // 0
 
-	const TURN_ON_PD_LPS              = 0X80
+	// const TURN_ON_PD_LPS              = 0X80
 
 	const MICROCTRL_ADDR    = 0x55
 
@@ -145,6 +145,9 @@ sio.on('connection', (socket) => {
 	const AO2_REGISTRY_CTRL = 0x22
 	const INPUT_AO1 = 0x09
 	const INPUT_AO2 = 0x0A
+
+	const LSM6DS3_TEMP_REGISTRY = 0x20
+
 
 	const bus    = i2c.openSync(I2C_ADDR)
 	const buffer = Buffer.alloc(2, 0x00)
@@ -160,10 +163,21 @@ sio.on('connection', (socket) => {
 		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_ON_13)
 	})
 
+	// socket.on('accSwitch', (mode) => {
+	// 	log.info(mode)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
+	// })
+
+	socket.on('accSwitch', (message) => {
+		log.info(message)
+	})
+
+
 	// gyroscope
-	// socket.on('gyroSwitch', (mode, message) => {
-	// 	bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)		
-	// }
+	// socket.on('gyroSwitch', (mode) => {
+	// 	bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
+	// 	// log.info(message)		
+	// })
 
 	socket.on('gyroOff', (message) => {
 		log.info(message)
@@ -186,16 +200,16 @@ sio.on('connection', (socket) => {
 	// 	bus.writeByteSync(LSM6DS3_ADDR, LPS25HB_PRESS_REGISTRY_CTRL, TURN_ON_PD_LPS)
 	// })
 
-	// // temperature LSM6DS3
-	// socket.on('tempLSMOff', (message) => {
-	// 	log.info(message)
-	// 	bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY_CTRL, TURN_OFF)
-	// })
+	// temperature LSM6DS3
+	socket.on('tempLSMOff', (message) => {
+		log.info(message)
+		bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY, TURN_OFF)
+	})
 
-	// socket.on('tempLSMOn', (message) => {
-	// 	log.info(message)
-	// 	bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY_CTRL, TURN_ON_13)
-	// })
+	socket.on('tempLSMOn', (message) => {
+		log.info(message)
+		bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY, TURN_ON_13)
+	})
 
 	// ctrl ao1
 	socket.on('writeAO1', (message) => {

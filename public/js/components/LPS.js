@@ -27,23 +27,25 @@ const LPS = (props) => {
         <tr>
 	        <td>Pressure</td>
 	        <td>{ _.ceil(pressure.pressure) }</td>
-	        <td></td><td></td>
+	        <td></td>
 	        <td>
 	          <div className="btn-group" role="group">
 	            <button type="button" className="btn btn-sm btn-info" onClick={pressOn}>On</button>
 	            <button type="button" className="btn btn-sm btn-info" onClick={pressOff}>Off</button>
 	          </div>
 	        </td>
+          <td>{`Status: ${pressure.status}`}</td>
         </tr>
         <tr><td>Temperature (°C)</td>
         <td>{ _.round((temperature.LPS25HB), 2).toFixed(2) }</td>
-        <td></td><td></td>
+        <td></td>
         <td>
           <div className="btn-group" role="group">
             <button type="button" className="btn btn-sm btn-info" onClick={tempLPSOn}>On</button>
             <button type="button" className="btn btn-sm btn-info" onClick={tempLPSOff}>Off</button>
           </div>          
         </td>
+        <td>{`Status: ${temperature.status}`}</td>
         </tr>
 
       </tbody>
@@ -51,3 +53,6 @@ const LPS = (props) => {
     </div>
   )
 }
+
+              // <button type="button" className={`btn btn-sm btn-info ${acc.status ? "active" : ""}`} onClick={pressOn}>On</button>
+              // <button type="button" className={`btn btn-sm btn-info ${acc.status ? "" : "active"}`} onClick={pressOff}>Off</button>

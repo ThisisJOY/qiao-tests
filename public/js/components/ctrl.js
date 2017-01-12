@@ -39,7 +39,7 @@ const Ctrl = (props) => {
         <tr><td>ao2 (mV)</td><td>{ ctrl.ao2 }</td></tr>
         <tr><td>va01 (V)</td><td>{ _.round((ctrl.va01), 2).toFixed(2) }</td></tr>
         <tr><td>va02 (V)</td><td>{ _.round((ctrl.va02), 2).toFixed(2) }</td></tr>
-        <tr><td>out</td><td>{ _.round((ctrl.out / 1000), 2).toFixed(2) }</td></tr>
+        <tr><td>out (V)</td><td>{ _.round((ctrl.out), 2).toFixed(2) }</td></tr>
       </tbody>
       </table>
 
