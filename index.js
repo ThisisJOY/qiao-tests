@@ -1,6 +1,6 @@
-/**************************
+/*********************************************************************
  * read data from ivh2
- **************************/
+ *********************************************************************/
 
 const gps               = require('./lib/gps')
 const osInfo            = require('./lib/os-info')
@@ -48,9 +48,9 @@ temperature.on("new_temperature", (temp) => {
 
 // setInterval( () => { console.log(state) }, 1000)
 
-/**************************
+/*********************************************************************
  * back-end for web page
- **************************/
+ *********************************************************************/
 
 const express           = require('express')
 const http              = require('http')
@@ -116,9 +116,9 @@ sio.on('connection', (socket) => {
 		socket.emit('state', state)
 	}, 1000)
 
-	/************************************************
+/*********************************************************************
 	 * receive configuration commands from front-end
-	 ************************************************/
+ *********************************************************************/
 
 	const i2c               = require("i2c-bus")
 
@@ -141,10 +141,10 @@ sio.on('connection', (socket) => {
 
 	const MICROCTRL_ADDR    = 0x55
 
-	const AO1_REGISTRY_CTRL = 0x20
-	const AO2_REGISTRY_CTRL = 0x22
-	const INPUT_AO1 = 0x09
-	const INPUT_AO2 = 0x0A
+	const PMIC_REG_AO1 = 0x20
+	const PMIC_REG_AO2 = 0x22
+	var INPUT_AO1 = 0x09
+	var INPUT_AO2 = 0x0A
 
 	const LSM6DS3_TEMP_REGISTRY = 0x20
 
@@ -163,20 +163,13 @@ sio.on('connection', (socket) => {
 		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, TURN_ON_13)
 	})
 
-	// socket.on('accSwitch', (mode) => {
-	// 	log.info(mode)
-	// 	bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
-	// })
-
-	socket.on('accSwitch', (message) => {
-		log.info(message)
+	socket.on('accSwitch', (mode) => {
+		log.info(mode)
+		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
 	})
 
-
-	// gyroscope
-	// socket.on('gyroSwitch', (mode) => {
-	// 	bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
-	// 	// log.info(message)		
+	// socket.on('accSwitch', (message) => {
+	// 	log.info(message)
 	// })
 
 	socket.on('gyroOff', (message) => {
@@ -188,6 +181,32 @@ sio.on('connection', (socket) => {
 		log.info(message)
 		bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, TURN_ON_13)
 	})
+
+	// ctrl ao1
+	socket.on('saveAO1', (message) => {
+		log.info(message + ": " + INPUT_AO1)
+		bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_AO1, INPUT_AO1)
+	})
+
+	socket.on('handleChange', (input) => {
+		INPUT_AO1 = Number(input)
+		log.info(typeof(INPUT_AO1), INPUT_AO1)
+		bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_AO1, INPUT_AO1)
+	})
+
+	// ctrl ao2
+	socket.on('saveAO2', (message) => {
+		// log.info(message + ": " + INPUT_AO2)
+		bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_AO2, INPUT_AO2)
+	})
+
+})
+
+	// gyroscope
+	// socket.on('gyroSwitch', (mode) => {
+	// 	bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
+	// 	// log.info(message)		
+	// })
 
 	// // pressure LPS25HB
 	// socket.on('pressOff', (message) => {
@@ -201,36 +220,34 @@ sio.on('connection', (socket) => {
 	// })
 
 	// temperature LSM6DS3
-	socket.on('tempLSMOff', (message) => {
-		log.info(message)
-		bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY, TURN_OFF)
-	})
-
-	socket.on('tempLSMOn', (message) => {
-		log.info(message)
-		bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY, TURN_ON_13)
-	})
-
-	// ctrl ao1
-	socket.on('writeAO1', (message) => {
-		log.info(message + ": " + INPUT_AO1)
-		bus.writeWordSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
-	})
-
-	// ctrl ao2
-	socket.on('writeAO2', (message) => {
-		log.info(message + ": " + INPUT_AO2)
-		bus.writeWordSync(MICROCTRL_ADDR, AO2_REGISTRY_CTRL, INPUT_AO2)
-	})
-
-	// socket.on('handleChange', (message) => {
+	// socket.on('tempLSMOff', (message) => {
 	// 	log.info(message)
-	// 	bus.writeByteSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY, TURN_OFF)
 	// })
+
+	// socket.on('tempLSMOn', (message) => {
+	// 	log.info(message)
+	// 	bus.writeByteSync(LSM6DS3_ADDR, LSM6DS3_TEMP_REGISTRY, TURN_ON_13)
+	// })
+
+	// socket.on('restoreAO1', (message) => {
+	// 	log.info(message + "..." )
+	// 	microctrl.on('new_data', (ctrl) => {
+ //  			state.ctrl = ctrl
+	// 	})
+	// })
+
+	// socket.on('handleChange', (input) => {
+	// 	log.info(input)
+	// 	INPUT_AO2 = input
+	// 	bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_AO2, INPUT_AO2)
+	// })
+
+
 
 	// socket.on('handleSubmit', (message) => {
 	// 	log.info(message)
-	// 	bus.writeByteSync(MICROCTRL_ADDR, AO1_REGISTRY_CTRL, INPUT_AO1)
+	// 	bus.writeByteSync(MICROCTRL_ADDR, PMIC_REG_AO1, INPUT_AO1)
 	// })
 
-})
+

@@ -13,8 +13,8 @@ const LSM = (props) => {
     socket.emit('accOn', "Turning LSM6DS3 accelerometer on ...")
   }
 
-  const accSwitch = (message) => {
-    socket.emit('gyroSwitch', message)
+  const accSwitch = (mode) => {
+    socket.emit('gyroSwitch', mode)
   }
 
   const gyroSwitch = (mode) => {
@@ -66,7 +66,9 @@ const LSM = (props) => {
           <td>
             <div className="btn-group" role="group">
               <button type="button" className={`btn btn-sm btn-info ${acc.status ? "active" : ""}`} onClick={accOn}>On</button>
-              <button type="button" className={`btn btn-sm btn-info ${acc.status ? "" : "active"}`} onClick={accOff}>Off</button>
+              <button type="button" className={`btn btn-sm btn-info ${acc.status ? "" : "active"}`} onClick={accOff}>Off</button>              
+              <button type="button" className={`btn btn-sm btn-info ${acc.status ? "active" : ""}`} onClick={accSwitch(1)}>On</button>
+              <button type="button" className={`btn btn-sm btn-info ${acc.status ? "" : "active"}`} onClick={accSwitch(0)}>Off</button>
             </div>
           </td>
           <td>{`Status: ${acc.status}`}</td>
