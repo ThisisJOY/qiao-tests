@@ -1,5 +1,5 @@
 // const socket = window.io.connect('http://localhost:3000')
-const socket = io.connect('http://192.168.1.49:3000')
+const socket = io.connect('http://192.168.1.22:3000')
 
 const { Component } = React
 
@@ -47,7 +47,8 @@ class App extends Component {
     gyro: {},
     ctrl: {},
     pressure: {},
-    temperature: {}
+    temperature: {},
+    configValue: ""
   }
 
   componentDidMount = () => {
@@ -57,6 +58,10 @@ class App extends Component {
 
   }
 
+  onConfigChange = (value) => {
+    this.setState({configValue: value})
+  }
+
   render = () => {
     return (
       <div>
@@ -64,7 +69,7 @@ class App extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-6">
-              <OsInfo data={this.state.os} />
+              <SystemInfo data={this.state.os} />
             </div>
             <div className="col-md-6">
               <LSM data={this.state} />
@@ -73,10 +78,10 @@ class App extends Component {
           </div>
           <div className="row">
           	<div className="col-md-6">
-	            <Ctrl data={this.state} />
+	            <PMIC data={this.state} />
           	</div>
           	<div className="col-md-6">
-          		<Config data={this.state} />
+          		<Config data={this.state} value={this.state.configValue} onChange={this.onConfigChange}/>
           	</div>
           </div>
           <div className="row">

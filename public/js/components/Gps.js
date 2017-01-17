@@ -8,7 +8,7 @@ const Gps = (props) => {
      <h3><span className="label label-success">GPS</span></h3>
       <table className="table table-striped table-condensed">
       <tbody>
-        <tr><td>Time (s)</td><td>{ _.ceil(gpgga.time) }</td></tr>
+        <tr><td>GMT Time (hhmmss)</td><td>{ _.ceil(gpgga.time) }</td></tr>
         <tr><td>Latitude (°)</td><td>{ gpgga.latitude }</td></tr>
         <tr><td>Longitude (°)</td><td>{ gpgga.longitude }</td></tr>
       </tbody>

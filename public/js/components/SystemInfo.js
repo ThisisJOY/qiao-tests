@@ -1,4 +1,4 @@
-const OsInfo = (props) => {
+const SystemInfo = (props) => {
 
   return (
     <div>
