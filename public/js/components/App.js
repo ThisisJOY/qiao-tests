@@ -95,7 +95,7 @@ class App extends Component {
 
     if (flag == "wdto") {
       this.setState({configValue: {
-          wdto: value
+          wdtoValue: value
         } 
       })
     }
@@ -117,11 +117,8 @@ class App extends Component {
             </div>
           </div>
           <div className="row">
-          	<div className="col-md-6">
+          	<div className="col-md-12">
 	            <PMIC data={this.state} value={this.state.configValue} onChange={this.onConfigChange} />
-          	</div>
-          	<div className="col-md-6">
-          		<Config data={this.state} value={this.state.configValue} onChange={this.onConfigChange} />
           	</div>
           </div>
           <div className="row">

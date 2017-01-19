@@ -21,8 +21,8 @@ const LSM = (props) => {
           <td>{ acc.z }</td>
           <td>
             <div className="btn-group" role="group">
-              <button type="button" className={`btn btn-sm btn-info ${acc.status ? "active" : ""}`} onClick={() => switches("acc", 1)}>On</button>
-              <button type="button" className={`btn btn-sm btn-info ${acc.status ? "" : "active"}`} onClick={() => switches("acc", 0)}>Off</button>
+              <button type="button" className={`btn btn-xs btn-info ${acc.status ? "active" : ""}`} onClick={() => switches("acc", 1)}>On</button>
+              <button type="button" className={`btn btn-xs btn-info ${acc.status ? "" : "active"}`} onClick={() => switches("acc", 0)}>Off</button>
             </div>
           </td>
         </tr>
@@ -33,8 +33,8 @@ const LSM = (props) => {
           <td>{ gyro.z }</td>
           <td>
             <div className="btn-group" role="group">
-              <button type="button" className={`btn btn-sm btn-info ${gyro.status ? "active" : ""}`} onClick={() => switches("gyro", 1)}>On</button>
-              <button type="button" className={`btn btn-sm btn-info ${gyro.status ? "" : "active"}`} onClick={() => switches("gyro", 0)}>Off</button>
+              <button type="button" className={`btn btn-xs btn-info ${gyro.status ? "active" : ""}`} onClick={() => switches("gyro", 1)}>On</button>
+              <button type="button" className={`btn btn-xs btn-info ${gyro.status ? "" : "active"}`} onClick={() => switches("gyro", 0)}>Off</button>
             </div>
           </td>
         </tr>

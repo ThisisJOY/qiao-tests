@@ -23,8 +23,8 @@ const PMIC = (props) => {
       <tbody>
         <tr>
             <td>Analog output 1 (mV)</td>
-            <td>
-                <td>{ ctrl.ao1 }</td>     
+            <td>{ ctrl.ao1 }</td> 
+            <td>    
                 <div className="input-group ">
                     <input type="text" className="form-control input-xs" placeholder="set analog output 1" value={props.value.ao1Value} onChange={(event) => input(event, "ao1")} />
                     <span className="input-group-btn">
@@ -36,8 +36,8 @@ const PMIC = (props) => {
 
         <tr>
             <td>Analog output 2 (mV)</td>
-            <td>
-                <td>{ ctrl.ao2 }</td>     
+            <td>{ ctrl.ao2 }</td> 
+            <td>    
                 <div className="input-group ">
                     <input type="text" className="form-control input-xs" placeholder="set analog output 2" value={props.value.ao2Value} onChange={(event) => input(event, "ao2")} />
                     <span className="input-group-btn">
@@ -49,8 +49,8 @@ const PMIC = (props) => {
 
         <tr>
             <td>pwroff_vlow</td>
-            <td>
-                <td>{ ctrl.pwroff_vlow }</td>     
+            <td>{ ctrl.pwroff_vlow }</td> 
+            <td>    
                 <div className="input-group">
                     <input type="text" className="form-control input-xs" placeholder="set vlow..." value={props.value.vlowValue} onChange={(event) => input(event, "vlow")}/>
                     <span className="input-group-btn">
@@ -59,30 +59,67 @@ const PMIC = (props) => {
                 </div>
             </td>
         </tr>
-        <tr><td>pwron_vhigh</td><td>{ ctrl.pwron_vhigh }</td></tr>
-        <tr><td>Board Temp (°C)</td><td>{ ctrl.brd_temp }</td></tr>
-        <tr><td>PDie Temp (°C)</td><td>{ _.round((ctrl.pwr_temp), 2).toFixed(2)}</td></tr>
-        <tr><td>DA 1 (V)</td><td>{ _.round((ctrl.va01), 2).toFixed(2) }</td></tr>
-        <tr><td>DA 2 (V)</td><td>{ _.round((ctrl.va02), 2).toFixed(2) }</td></tr>
-        <tr><td>Battery (V)</td><td>{ _.round((ctrl.vbus), 2).toFixed(2) }</td></tr>
-        <tr><td>IO 1 (V)</td><td>{ _.round((ctrl.vi1), 2).toFixed(2) }</td></tr>
-        <tr><td>IO 2 (V)</td><td>{ _.round((ctrl.vi2), 2).toFixed(2) }</td></tr>
-        <tr><td>IO 3 (V)</td><td>{ _.round((ctrl.vi3), 2).toFixed(2) }</td></tr>
-        <tr><td>IO 4 (V)</td><td>{ _.round((ctrl.vi4), 2).toFixed(2) }</td></tr>
-        <tr><td>Ignition (V)</td><td>{ _.round((ctrl.vign), 2).toFixed(2) }</td></tr>
+
         <tr>
-            <td>wd</td>
+            <td>pwron_vhigh</td>
+            <td>{ ctrl.pwron_vhigh }</td>
             <td>
-                <td>{ ctrl.wd }</td>
-                <div className="btn-group" role="group">
-                    <button type="button" className={`btn btn-sm btn-info ${(ctrl.wd === 640) ? "active" : ""}`} onClick={() => switches("wd", 1)}>On</button>
-                    <button type="button" className={`btn btn-sm btn-info ${(ctrl.wd === 512) ? "active" : ""}`} onClick={() => switches("wd", 0)}>Off</button>
+                <div className="input-group">
+                    <input type="text" className="form-control input-xs" placeholder="set vhigh..." value={props.value.vhighValue} onChange={(event) => input(event, "vhigh")}/>
+                    <span className="input-group-btn">
+                      <button type="button" className="btn btn-xs btn-info" onClick={() => send('save', "vhigh", props.value.vhighValue, `Setting pwron_vhigh to ${props.value.vhighValue} mV`)}>Save</button>
+                    </span>
                 </div>
             </td>
         </tr>
-        <tr><td>wd_reset</td><td>{ ctrl.wd_reset }</td></tr>
-        <tr><td>wd_timeout</td><td>{ ctrl.wd_timeout }</td></tr>
+
+        <tr><td>Board Temp (°C)</td><td>{ ctrl.brd_temp }</td><td></td></tr>
+
+        <tr><td>PDie Temp (°C)</td><td>{ _.round((ctrl.pwr_temp), 2).toFixed(2)}</td><td></td></tr>
+
+        <tr><td>DA 1 (V)</td><td>{ _.round((ctrl.va01), 2).toFixed(2) }</td><td></td></tr>
+
+        <tr><td>DA 2 (V)</td><td>{ _.round((ctrl.va02), 2).toFixed(2) }</td><td></td></tr>
+
+        <tr><td>Battery (V)</td><td>{ _.round((ctrl.vbus), 2).toFixed(2) }</td><td></td></tr>
+
+        <tr><td>IO 1 (V)</td><td>{ _.round((ctrl.vi1), 2).toFixed(2) }</td><td></td></tr>
+
+        <tr><td>IO 2 (V)</td><td>{ _.round((ctrl.vi2), 2).toFixed(2) }</td><td></td></tr>
+
+        <tr><td>IO 3 (V)</td><td>{ _.round((ctrl.vi3), 2).toFixed(2) }</td><td></td></tr>
+
+        <tr><td>IO 4 (V)</td><td>{ _.round((ctrl.vi4), 2).toFixed(2) }</td><td></td></tr>
+
+        <tr><td>Ignition (V)</td><td>{ _.round((ctrl.vign), 2).toFixed(2) }</td><td></td></tr>
+
+        <tr><td>wd</td><td>{ ctrl.wd }</td>
+            <td>
+                <div className="btn-group" role="group">
+                    <button type="button" className={`btn btn-xs btn-info ${(ctrl.wd === 640) ? "active" : ""}`} onClick={() => switches("wd", 1)}>On</button>
+                    <button type="button" className={`btn btn-xs btn-info ${(ctrl.wd === 512) ? "active" : ""}`} onClick={() => switches("wd", 0)}>Off</button>
+                </div>
+            </td>
+        </tr>
+
+        <tr><td>wd_reset</td><td>{ ctrl.wd_reset }</td><td></td></tr>
+
+        <tr>
+            <td>wd_timeout</td>
+            <td>{ ctrl.wd_timeout }</td>
+            <td>
+                <div className="input-group">
+                    <input type="text" className="form-control input-xs" placeholder="set the watchdog timeout in seconds..." value={props.value.wdtoValue} onChange={(event) => input(event, "wdto")}/>
+                    <span className="input-group-btn">
+                        <button type="button" className="btn btn-xs btn-info" onClick={() => send('save', "wdto", props.value.wdtoValue, `Setting watchdog timeout to ${props.value.wdtoValue} mV`)}>Save</button>
+                        <button type="button" className="btn btn-xs btn-info" onClick={() => send('save', "wdres", props.value.wdtoValue, "Resetting watchdog")}>Reset</button>
+                    </span>
+                </div>
+            </td>
+        </tr>
+
         <tr><td>wd_timer</td><td>{ ctrl.wd_timer }</td></tr>
+
       </tbody>
       </table>
     </div>

@@ -180,7 +180,7 @@ sio.on('connection', (socket) => {
 			bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_PWRON_VHIGH, Number(value))			
 		}
 
-		if (flag == "wdto") {
+		if (flag === "wdto") {
 			log.info(message)
 			bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_WD_TIMEOUT, Number(value))
 		}
