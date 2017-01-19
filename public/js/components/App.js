@@ -48,7 +48,13 @@ class App extends Component {
     ctrl: {},
     pressure: {},
     temperature: {},
-    configValue: ""
+    configValue: {
+      ao1Value: "",
+      ao2Value: "",
+      vlowValue: "",
+      vhighValue: "",
+      wdtoValue: ""
+    }
   }
 
   componentDidMount = () => {
@@ -58,8 +64,42 @@ class App extends Component {
 
   }
 
-  onConfigChange = (value) => {
-    this.setState({configValue: value})
+  onConfigChange = (value, flag) => {
+    if (flag === "ao1") {
+      this.setState({configValue: {
+          ao1Value: value
+        }
+      })
+    }
+
+    if (flag === "ao2") {
+      this.setState({configValue: {
+          ao2Value: value
+        }
+      })
+    }
+
+    if (flag === "vlow") {
+      this.setState({configValue: {
+          vlowValue: value
+        }
+      })
+    }
+
+    if (flag === "vhigh") {
+      this.setState({configValue: {
+          vhighValue: value
+        }
+      })
+    }
+
+    if (flag == "wdto") {
+      this.setState({configValue: {
+          wdto: value
+        } 
+      })
+    }
+
   }
 
   render = () => {
@@ -78,10 +118,10 @@ class App extends Component {
           </div>
           <div className="row">
           	<div className="col-md-6">
-	            <PMIC data={this.state} />
+	            <PMIC data={this.state} value={this.state.configValue} onChange={this.onConfigChange} />
           	</div>
           	<div className="col-md-6">
-          		<Config data={this.state} value={this.state.configValue} onChange={this.onConfigChange}/>
+          		<Config data={this.state} value={this.state.configValue} onChange={this.onConfigChange} />
           	</div>
           </div>
           <div className="row">

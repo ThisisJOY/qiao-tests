@@ -5,12 +5,8 @@ const LSM = (props) => {
   const pressure    = props.data.pressure
   const temperature = props.data.temperature
 
-  const accSwitch = (mode) => {
-    socket.emit('accSwitch', mode)
-  }
-
-  const gyroSwitch = (mode) => {
-    socket.emit('gyroSwitch', mode)
+  const switches = (flag, mode) => {
+    socket.emit('switches', flag, mode)
   }
 
   return (
@@ -25,8 +21,8 @@ const LSM = (props) => {
           <td>{ acc.z }</td>
           <td>
             <div className="btn-group" role="group">
-              <button type="button" className={`btn btn-sm btn-info ${acc.status ? "active" : ""}`} onClick={() => accSwitch(1)}>On</button>
-              <button type="button" className={`btn btn-sm btn-info ${acc.status ? "" : "active"}`} onClick={() => accSwitch(0)}>Off</button>
+              <button type="button" className={`btn btn-sm btn-info ${acc.status ? "active" : ""}`} onClick={() => switches("acc", 1)}>On</button>
+              <button type="button" className={`btn btn-sm btn-info ${acc.status ? "" : "active"}`} onClick={() => switches("acc", 0)}>Off</button>
             </div>
           </td>
         </tr>
@@ -37,8 +33,8 @@ const LSM = (props) => {
           <td>{ gyro.z }</td>
           <td>
             <div className="btn-group" role="group">
-              <button type="button" className={`btn btn-sm btn-info ${gyro.status ? "active" : ""}`} onClick={() => gyroSwitch(1)}>On</button>
-              <button type="button" className={`btn btn-sm btn-info ${gyro.status ? "" : "active"}`} onClick={() => gyroSwitch(0)}>Off</button>
+              <button type="button" className={`btn btn-sm btn-info ${gyro.status ? "active" : ""}`} onClick={() => switches("gyro", 1)}>On</button>
+              <button type="button" className={`btn btn-sm btn-info ${gyro.status ? "" : "active"}`} onClick={() => switches("gyro", 0)}>Off</button>
             </div>
           </td>
         </tr>

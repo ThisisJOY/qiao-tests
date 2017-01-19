@@ -119,46 +119,72 @@ sio.on('connection', (socket) => {
 	 * receive configuration commands from front-end
  *********************************************************************/
 
-	const i2c               = require("i2c-bus")
-
+	const i2c                         = require("i2c-bus")
 	const I2C_ADDR                    = 0
+	const bus   			     	  = i2c.openSync(I2C_ADDR)
+	// const buffer                      = Buffer.alloc(2, 0x00)
 	const LSM6DS3_ADDR                = 0x6B
 	const LPS25HB_ADDR                = 0x5D
 	const ACC_REGISTRY_CTRL           = 0x10
-	const ACC_REGISTRY_X              = 0x28
-	const ACC_REGISTRY_Y              = 0x2A
-	const ACC_REGISTRY_Z              = 0x2C
 	const GYRO_REGISTRY_CTRL          = 0x11
-	const GYRO_REGISTRY_X             = 0x22
-	const GYRO_REGISTRY_Y             = 0x24
-	const GYRO_REGISTRY_Z             = 0x26
-	const TURN_ON_13                  = 0x10 // 13 Hz (low power)
-	const TURN_OFF                    = 0x00 // 0
 	const MICROCTRL_ADDR              = 0x55
 	const PMIC_REG_AO1                = 0x20
 	const PMIC_REG_AO2                = 0x22
-	var   INPUT_AO1
-	var   INPUT_AO2
+	const PMIC_REG_PWROFF_VLOW        = 0x8C
+	const PMIC_REG_PWRON_VHIGH        = 0x8E
+	const PMIC_REG_WD                 = 0x40 
+	const PMIC_REG_WD_TIMEOUT         = 0x44
+	// const PMIC_REG_WD_RESET           = 0x46 
+	const TURN_ON_13                  = 0x10 // 13 Hz (low power)
+	const TURN_OFF                    = 0x00 // 0
 
-	const LSM6DS3_TEMP_REGISTRY = 0x20
+	socket.on('switches', (flag, mode) => {
 
-	const bus    = i2c.openSync(I2C_ADDR)
-	const buffer = Buffer.alloc(2, 0x00)
+		if (flag === "acc") {
+			log.info(mode ? "turn accelerometer on": "turn accelerometer off")
+			bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
+		}
 
-	socket.on('accSwitch', (mode) => {
-		log.info(mode)
-		bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
+		if (flag === "gyro") {
+			log.info(mode ? "turn gyroscope on": "turn gyroscope off")
+			bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)			
+		}
+
+		if (flag === "wd") {
+			log.info(mode ? "enable watchdog timer": "disable watchdog timer")
+			bus.writeWordSync(LSM6DS3_ADDR, PMIC_REG_WD, mode ? 640 : 512)
+			log.info(state.ctrl.wd)			
+		}
+
 	})
 
-	socket.on('gyroSwitch', (mode) => {
-		log.info(mode)
-		bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
-	})
+	socket.on('save', (flag, value, message) => {
 
-	socket.on('saveAO1', (value, message) => {
-		INPUT_AO1 = Number(value)
-		log.info(message)
-		bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_AO1, INPUT_AO1)
+		if (flag === "ao1") {
+			log.info(message)
+			bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_AO1, Number(value))
+		}
+
+		if (flag === "ao2") {
+			log.info(message)
+			bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_AO2, Number(value))			
+		}
+
+		if (flag === "vlow") {
+			log.info(message)
+			bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_PWROFF_VLOW, Number(value))			
+		}
+
+		if (flag === "vhigh") {
+			log.info(message)
+			bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_PWRON_VHIGH, Number(value))			
+		}
+
+		if (flag == "wdto") {
+			log.info(message)
+			bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_WD_TIMEOUT, Number(value))
+		}
+
 	})
 
 })
