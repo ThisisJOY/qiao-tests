@@ -134,26 +134,30 @@ sio.on('connection', (socket) => {
 	const PMIC_REG_PWRON_VHIGH        = 0x8E
 	const PMIC_REG_WD                 = 0x40 
 	const PMIC_REG_WD_TIMEOUT         = 0x44
-	// const PMIC_REG_WD_RESET           = 0x46 
+	const PMIC_REG_WD_RESET           = 0x46 
 	const TURN_ON_13                  = 0x10 // 13 Hz (low power)
 	const TURN_OFF                    = 0x00 // 0
 
 	socket.on('switches', (flag, mode) => {
 
 		if (flag === "acc") {
-			log.info(mode ? "turn accelerometer on": "turn accelerometer off")
+			log.info(mode ? "Turning accelerometer on": "Turning accelerometer off")
 			bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
 		}
 
 		if (flag === "gyro") {
-			log.info(mode ? "turn gyroscope on": "turn gyroscope off")
+			log.info(mode ? "Turning gyroscope on": "Turning gyroscope off")
 			bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)			
 		}
 
 		if (flag === "wd") {
-			log.info(mode ? "enable watchdog timer": "disable watchdog timer")
-			bus.writeWordSync(LSM6DS3_ADDR, PMIC_REG_WD, mode ? 640 : 512)
-			log.info(state.ctrl.wd)			
+			log.info(mode ? "Enabling watchdog timer": "Disabling watchdog timer")
+			bus.writeByteSync(LSM6DS3_ADDR, PMIC_REG_WD, mode ? 0xFF : 0x00)
+		}
+
+		if (flag === "wdres") {
+			log.info("Resetting watchdog timer")
+			bus.writeByteSync(MICROCTRL_ADDR, PMIC_REG_WD_RESET, 0xD0)
 		}
 
 	})

@@ -52,7 +52,7 @@ const PMIC = (props) => {
             <td>{ ctrl.pwroff_vlow }</td> 
             <td>    
                 <div className="input-group">
-                    <input type="text" className="form-control input-xs" placeholder="set vlow..." value={props.value.vlowValue} onChange={(event) => input(event, "vlow")}/>
+                    <input type="text" className="form-control input-xs" placeholder="set vlow" value={props.value.vlowValue} onChange={(event) => input(event, "vlow")}/>
                     <span className="input-group-btn">
                       <button type="button" className="btn btn-xs btn-info" onClick={() => send('save', "vlow", props.value.vlowValue, `Setting pwroff_vlow to ${props.value.vlowValue} mV`)}>Save</button>
                     </span>
@@ -65,7 +65,7 @@ const PMIC = (props) => {
             <td>{ ctrl.pwron_vhigh }</td>
             <td>
                 <div className="input-group">
-                    <input type="text" className="form-control input-xs" placeholder="set vhigh..." value={props.value.vhighValue} onChange={(event) => input(event, "vhigh")}/>
+                    <input type="text" className="form-control input-xs" placeholder="set vhigh" value={props.value.vhighValue} onChange={(event) => input(event, "vhigh")}/>
                     <span className="input-group-btn">
                       <button type="button" className="btn btn-xs btn-info" onClick={() => send('save', "vhigh", props.value.vhighValue, `Setting pwron_vhigh to ${props.value.vhighValue} mV`)}>Save</button>
                     </span>
@@ -93,7 +93,30 @@ const PMIC = (props) => {
 
         <tr><td>Ignition (V)</td><td>{ _.round((ctrl.vign), 2).toFixed(2) }</td><td></td></tr>
 
-        <tr><td>wd</td><td>{ ctrl.wd }</td>
+        <tr><td>wd</td><td>{ ctrl.wd }</td><td></td></tr>
+
+        <tr><td>wd_reset</td><td>{ ctrl.wd_reset }</td>
+            <td>
+                <div className="btn-group" role="group">
+                    <button type="button" className="btn btn-xs btn-info" onClick={() => switches("wdres")}>Reset</button>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>wd_timeout</td>
+            <td>{ ctrl.wd_timeout }</td>
+            <td>
+                <div className="input-group">
+                    <input type="text" className="form-control input-xs" placeholder="set the watchdog timeout in seconds" value={props.value.wdtoValue} onChange={(event) => input(event, "wdto")}/>
+                    <span className="input-group-btn">
+                        <button type="button" className="btn btn-xs btn-info" onClick={() => send('save', "wdto", props.value.wdtoValue, `Setting watchdog timeout to ${props.value.wdtoValue} mV`)}>Save</button>
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr><td>wd_timer</td><td>{ ctrl.wd_timer }</td>
             <td>
                 <div className="btn-group" role="group">
                     <button type="button" className={`btn btn-xs btn-info ${(ctrl.wd === 640) ? "active" : ""}`} onClick={() => switches("wd", 1)}>On</button>
@@ -101,24 +124,6 @@ const PMIC = (props) => {
                 </div>
             </td>
         </tr>
-
-        <tr><td>wd_reset</td><td>{ ctrl.wd_reset }</td><td></td></tr>
-
-        <tr>
-            <td>wd_timeout</td>
-            <td>{ ctrl.wd_timeout }</td>
-            <td>
-                <div className="input-group">
-                    <input type="text" className="form-control input-xs" placeholder="set the watchdog timeout in seconds..." value={props.value.wdtoValue} onChange={(event) => input(event, "wdto")}/>
-                    <span className="input-group-btn">
-                        <button type="button" className="btn btn-xs btn-info" onClick={() => send('save', "wdto", props.value.wdtoValue, `Setting watchdog timeout to ${props.value.wdtoValue} mV`)}>Save</button>
-                        <button type="button" className="btn btn-xs btn-info" onClick={() => send('save', "wdres", props.value.wdtoValue, "Resetting watchdog")}>Reset</button>
-                    </span>
-                </div>
-            </td>
-        </tr>
-
-        <tr><td>wd_timer</td><td>{ ctrl.wd_timer }</td></tr>
 
       </tbody>
       </table>
