@@ -9,3 +9,8 @@ body {
     line-height: 1.5;
     border-radius: 3px;
 }
+
+.list-group-item {
+	height: 30px;
+    padding: 3px 10px;
+}

@@ -25,8 +25,8 @@ const Can = (props) => {
             <td>Can 0</td>
             <td>
               <div className="btn-group" role="group">
-                  <button type="button" className="btn btn-xs btn-info" onClick={() => switches("can", 1)}>Up</button>
-                  <button type="button" className="btn btn-xs btn-info" onClick={() => switches("can", 0)}>Down</button>
+                  <button type="button" className="btn btn-xs btn-info" onClick={() => switches("can", "up")}>Up</button>
+                  <button type="button" className="btn btn-xs btn-info" onClick={() => switches("can", "down")}>Down</button>
               </div>
             </td>
 
@@ -36,12 +36,11 @@ const Can = (props) => {
                   Baudrate
                   <span className="caret"></span>
                 </button>
-                <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <button type="button" className="list-group-item">Cras justo odio</button>
-                  <button type="button" className="list-group-item">Dapibus ac facilisis in</button>
-                  <button type="button" className="list-group-item">Morbi leo risus</button>
-                  <button type="button" className="list-group-item">Porta ac consectetur ac</button>
-                  <button type="button" className="list-group-item">Vestibulum at eros</button>
+                <ul className="dropdown-menu list-group">
+                  <li><button type="button" className="list-group-item btn-xs" onClick={() => switches("can", "125kbps")}>125 kbit/s</button></li>
+                  <li><button type="button" className="list-group-item btn-xs" onClick={() => switches("can", "250kbps")}>250 kbit/s</button></li>
+                  <li><button type="button" className="list-group-item btn-xs" onClick={() => switches("can", "500kbps")}>500 kbit/s</button></li>
+                  <li><button type="button" className="list-group-item btn-xs" onClick={() => switches("can", "1000kbps")}>1000 kbit/s</button></li>
                 </ul>
               </div>
             </td>
@@ -51,8 +50,8 @@ const Can = (props) => {
             <td>Can 1</td>
             <td>
                 <div className="btn-group" role="group">
-                    <button type="button" className="btn btn-xs btn-info" onClick={() => switches("can", 1)}>Up</button>
-                    <button type="button" className="btn btn-xs btn-info" onClick={() => switches("can", 0)}>Down</button>
+                    <button type="button" className="btn btn-xs btn-info" onClick={() => switches("can", "up")}>Up</button>
+                    <button type="button" className="btn btn-xs btn-info" onClick={() => switches("can", "down")}>Down</button>
                 </div>
             </td>
             <td>
@@ -61,12 +60,11 @@ const Can = (props) => {
                   Baudrate
                   <span className="caret"></span>
                 </button>
-                <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <button type="button" className="list-group-item">Cras justo odio</button>
-                  <button type="button" className="list-group-item">Dapibus ac facilisis in</button>
-                  <button type="button" className="list-group-item">Morbi leo risus</button>
-                  <button type="button" className="list-group-item">Porta ac consectetur ac</button>
-                  <button type="button" className="list-group-item">Vestibulum at eros</button>
+                <ul className="dropdown-menu">
+                  <button type="button" className="list-group-item btn-xs" onClick={() => switches("can", "125kbps")}>125 kbit/s</button>
+                  <button type="button" className="list-group-item btn-xs" onClick={() => switches("can", "250kbps")}>250 kbit/s</button>
+                  <button type="button" className="list-group-item btn-xs" onClick={() => switches("can", "500kbps")}>500 kbit/s</button>
+                  <button type="button" className="list-group-item btn-xs" onClick={() => switches("can", "1000kbps")}>1000 kbit/s</button>
                 </ul>
               </div>
             </td>

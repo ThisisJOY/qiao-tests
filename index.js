@@ -161,6 +161,11 @@ sio.on('connection', (socket) => {
 			bus.writeByteSync(MICROCTRL_ADDR, PMIC_REG_WD_RESET, 0xD0)
 		}
 
+		// spawn can functionalities...
+		if (flag === "can") {
+			log.info("configuring can")
+	
+		}
 	})
 
 	socket.on('save', (flag, value, message) => {
