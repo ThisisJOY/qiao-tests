@@ -141,58 +141,54 @@ sio.on('connection', (socket) => {
 
 	socket.on('switches', (flag, mode) => {
 
-		if (flag === "acc") {
-			log.info(mode ? "Turning accelerometer on": "Turning accelerometer off")
-			bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
+		switch(flag) {
+			
+			case "acc":   log.info(mode ? "Turning accelerometer on": "Turning accelerometer off")
+						  bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
+						  break
+
+			case "gyro":  log.info(mode ? "Turning gyroscope on": "Turning gyroscope off")
+						  bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
+						  break
+			
+			case "wd":    log.info(mode ? "Enabling watchdog timer": "Disabling watchdog timer")
+					      bus.writeByteSync(LSM6DS3_ADDR, PMIC_REG_WD, mode ? 0xFF : 0x00)
+					      break
+
+			case "wdres": log.info("Resetting watchdog timer")
+						  bus.writeByteSync(MICROCTRL_ADDR, PMIC_REG_WD_RESET, 0xD0)
+						  break
+
+			// spawn can functionalities...
+			case "can":   log.info("configuring can")
+						  break
 		}
 
-		if (flag === "gyro") {
-			log.info(mode ? "Turning gyroscope on": "Turning gyroscope off")
-			bus.writeByteSync(LSM6DS3_ADDR, GYRO_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)			
-		}
-
-		if (flag === "wd") {
-			log.info(mode ? "Enabling watchdog timer": "Disabling watchdog timer")
-			bus.writeByteSync(LSM6DS3_ADDR, PMIC_REG_WD, mode ? 0xFF : 0x00)
-		}
-
-		if (flag === "wdres") {
-			log.info("Resetting watchdog timer")
-			bus.writeByteSync(MICROCTRL_ADDR, PMIC_REG_WD_RESET, 0xD0)
-		}
-
-		// spawn can functionalities...
-		if (flag === "can") {
-			log.info("configuring can")
-	
-		}
 	})
 
 	socket.on('save', (flag, value, message) => {
 
-		if (flag === "ao1") {
-			log.info(message)
-			bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_AO1, Number(value))
-		}
+		switch(flag) {
 
-		if (flag === "ao2") {
-			log.info(message)
-			bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_AO2, Number(value))			
-		}
+			case "ao1":   log.info(message)
+						  bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_AO1, Number(value))
+						  break
 
-		if (flag === "vlow") {
-			log.info(message)
-			bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_PWROFF_VLOW, Number(value))			
-		}
+			case "ao2":   log.info(message)
+						  bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_AO2, Number(value))										
+						  break
 
-		if (flag === "vhigh") {
-			log.info(message)
-			bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_PWRON_VHIGH, Number(value))			
-		}
+			case "vlow":  log.info(message)
+						  bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_PWROFF_VLOW, Number(value))			
+						  break 
 
-		if (flag === "wdto") {
-			log.info(message)
-			bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_WD_TIMEOUT, Number(value))
+			case "vhigh": log.info(message)
+						  bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_PWRON_VHIGH, Number(value))			
+						  break
+
+			case "wdto":  log.info(message)
+						  bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_WD_TIMEOUT, Number(value))
+   						  break
 		}
 
 	})
