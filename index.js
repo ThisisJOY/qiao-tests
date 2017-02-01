@@ -142,7 +142,7 @@ sio.on('connection', (socket) => {
 	socket.on('switches', (flag, mode) => {
 
 		switch(flag) {
-			
+
 			case "acc":   log.info(mode ? "Turning accelerometer on": "Turning accelerometer off")
 						  bus.writeByteSync(LSM6DS3_ADDR, ACC_REGISTRY_CTRL, mode ? TURN_ON_13 : TURN_OFF)
 						  break
@@ -162,6 +162,8 @@ sio.on('connection', (socket) => {
 			// spawn can functionalities...
 			case "can":   log.info("configuring can")
 						  break
+
+			default:      break
 		}
 
 	})
@@ -189,6 +191,8 @@ sio.on('connection', (socket) => {
 			case "wdto":  log.info(message)
 						  bus.writeWordSync(MICROCTRL_ADDR, PMIC_REG_WD_TIMEOUT, Number(value))
    						  break
+
+   			default:      break
 		}
 
 	})
