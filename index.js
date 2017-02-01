@@ -71,7 +71,8 @@ var host = config.server.host || 'localhost'
 
 // setting all the static path
 app.use(express.static('./public'))
-app.use('/vendor/bootstrap',          express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
+app.use('/vendor/bootstrap',          express.static(path.join(__dirname, 'node_modules/bootstrap/dist')))
+app.use('/vendor/jquery',             express.static(path.join(__dirname, 'node_modules/jquery/dist')))
 app.use('/vendor/babel',              express.static(path.join(__dirname, 'node_modules/babel-standalone')))
 app.use('/vendor/react',              express.static(path.join(__dirname, 'node_modules/react/dist')))
 app.use('/vendor/react-dom',          express.static(path.join(__dirname, 'node_modules/react-dom/dist')))

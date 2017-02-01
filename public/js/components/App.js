@@ -1,5 +1,5 @@
 // const socket = window.io.connect('http://localhost:3000')
-const socket = io.connect('http://192.168.1.22:3000')
+const socket = io.connect('http://192.168.1.45:3000')
 
 const { Component } = React
 
@@ -118,8 +118,13 @@ class App extends Component {
           </div>
           <div className="row">
           	<div className="col-md-12">
-	            <PMIC data={this.state} value={this.state.configValue} onChange={this.onConfigChange} />
+	            <Can data={this.state} value={this.state.configValue} onChange={this.onConfigChange} />
           	</div>
+          </div>
+          <div className="row">
+            <div className="col-md-12">
+              <PMIC data={this.state} value={this.state.configValue} onChange={this.onConfigChange} />
+            </div>
           </div>
           <div className="row">
             <div className="col-md-6">

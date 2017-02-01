@@ -119,8 +119,8 @@ const PMIC = (props) => {
         <tr><td>wd_timer</td><td>{ ctrl.wd_timer }</td>
             <td>
                 <div className="btn-group" role="group">
-                    <button type="button" className={`btn btn-xs btn-info ${(ctrl.wd === 640) ? "active" : ""}`} onClick={() => switches("wd", 1)}>On</button>
-                    <button type="button" className={`btn btn-xs btn-info ${(ctrl.wd === 512) ? "active" : ""}`} onClick={() => switches("wd", 0)}>Off</button>
+                    <button type="button" className={`btn btn-xs btn-info ${(ctrl.wd === 640) ? "active" : ""}`} onClick={() => switches("wd", 1)}>Enable</button>
+                    <button type="button" className={`btn btn-xs btn-info ${(ctrl.wd === 512) ? "active" : ""}`} onClick={() => switches("wd", 0)}>Disable</button>
                 </div>
             </td>
         </tr>
